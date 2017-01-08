@@ -1,0 +1,39 @@
+# -*- mode: ruby -*-
+# # vi: set ft=ruby :
+
+require 'yaml'
+
+VAGRANT_API_VERSION = "2"
+HOST_CONFIG = YAML.load_file("./config/vagrant.yml")
+
+Vagrant.configure(VAGRANT_API_VERSION) do |config|
+
+  HOST_CONFIG["hosts"].each do |host|
+
+    # Add host entry to /etc/hosts on guest machine's during Vagrant up
+    system("exec ./etc-hosts.sh #{host["ip"]} #{host["name"]}")
+
+    config.vm.define host["name"] do |machine|
+
+      # Add the host to the guest machine's ~/.ssh/config to allow for SSH access
+      system("exec ./ssh-config.sh #{host["ip"]} #{host["name"]}")
+
+      machine.vm.box = host["os"]
+      machine.vm.hostname = host["name"]
+
+      machine.vm.network "private_network", ip: host["ip"]
+
+      machine.vm.provision :shell, path: "./etc-hosts.sh",
+        args: ["#{host["ip"]}","#{host["name"]}"]
+
+      machine.vm.provider "virtualbox" do |v|
+        v.name =  host["name"]
+        v.memory = host["memory"]
+        v.cpus = host["cpu"]
+        v.customize ["modifyvm", :id, "--nictype1", "#{HOST_CONFIG["virtual-box"]["nic-type"]}"]
+        v.customize ["modifyvm", :id, "--nictype2", "#{HOST_CONFIG["virtual-box"]["nic-type"]}"]
+      end
+    end
+
+  end
+end

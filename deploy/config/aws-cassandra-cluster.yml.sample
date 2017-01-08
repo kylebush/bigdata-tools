@@ -1,0 +1,28 @@
+all-hosts:
+  user: ubuntu
+  ssh-key: ~/.ssh/your-ssh-key.pem
+  aws-ebs:
+    - device: /dev/xvdb
+      mount: /mnt/cassandra/data
+    - device: /dev/xvdc
+      mount: /mnt/cassandra/other
+  software:
+    - name: cassandra
+      args:
+        cluster-name: C4XL
+        seeds: 10.0.0.1,10.0.0.2,10.0.3
+        data-file-directory: /mnt/cassandra/data
+        commit-log-directory: /mnt/cassandra/other/commit_log
+        saved-caches-directory: /mnt/cassandra/other/saved_caches
+        endpoint-snitch: Ec2Snitch
+    - name: cassandra-lucene-index
+hosts:
+  - name: cassandra-1
+    private-ip: 10.0.0.1
+    public-ip: ec2-111-111-111-111.compute-1.amazonaws.com
+  - name: cassandra-2
+    private-ip: 10.0.0.2
+    public-ip: ec2-222-222-222-222.compute-1.amazonaws.com
+  - name: cassandra-3
+    private-ip: 10.0.0.3
+    public-ip: ec2-333-333-333-333.compute-1.amazonaws.com

@@ -1,0 +1,30 @@
+# ------------------------------------------------------
+# AWS EC2 - Launch Configuration
+# ------------------------------------------------------
+dryrun: false
+verbose: true
+az: us-east-1e
+region: us-east-1
+ami-id: ami-d05e75b8
+instance-type: c4.xlarge
+ebs-optimized: False
+ebs:
+  volumes:
+    - device: /dev/sdb
+      size_gb: 500
+      type: gp2
+    - device: /dev/sdc
+      size_gb: 100
+      type: gp2
+in_vpc: true
+security-groups:
+  - sg-11111111
+  - sg-22222222
+tags:
+  Name: cassandra
+  tag1: value1
+ssh_keys:
+  key-pair-name: your-ssh-key
+subnets:
+  us-east-1e:
+    subnet: subnet-3932a614

@@ -1,0 +1,54 @@
+# ------------------------------------------------------
+# Global configuration
+#
+# virtual-box:
+#   nic-type:
+#     Am79C970A  : AMD PCNet PCI II
+#     Am79C973   : AMD PCNet FAST III
+#     82540EM    : Intel PRO/1000 MT Desktop
+#     82543GC    : Intel PRO/1000 T Server
+#     82545EM    : Intel PRO/1000 MT Server
+#     virtio     : Paravirtualized network adapter
+# ------------------------------------------------------
+virtual-box:
+  nic-type: Am79C973
+
+# ------------------------------------------------------
+# VM specific configuration:
+#
+#   name: name of the VM
+#   os: operating system
+#   cpu: number of vCPUs
+#   memory: ram in GB
+#   ip: ip address
+# ------------------------------------------------------
+hosts:
+  - name: zookeeper
+    os: ubuntu/trusty64
+    cpu: 1
+    memory: 512
+    ip: 192.168.100.100
+
+  - name: kafka
+    os: ubuntu/trusty64
+    cpu: 2
+    memory: 2048
+    ip: 192.168.100.102
+
+  - name: redis
+    os: ubuntu/trusty64
+    cpu: 1
+    memory: 512
+    ip: 192.168.100.111
+
+  - name: cassandra
+    os: ubuntu/trusty64
+    cpu: 2
+    memory: 4096
+    ip: 192.168.100.106
+
+  - name: riak
+    os: ubuntu/trusty64
+    cpu: 2
+    memory: 2048
+    ip: 192.168.100.107

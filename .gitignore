@@ -1,0 +1,7 @@
+.idea
+aws/provision/config/*.yml
+deploy/config/*.yml
+vagrant/.vagrant
+vagrant/config/*.yml
+
+

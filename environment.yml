@@ -1,0 +1,10 @@
+name: bigdata-tools
+dependencies:
+- pip
+- python=2
+- pip:
+  - boto==2.20.1
+  - botocore==0.85.0
+  - fabric
+  - pyyaml
+  - paramiko
