@@ -12,13 +12,19 @@ __status__ = "Development"
 
 def get_config(config_file):
     merged_cfg = {}
+
     merged_cfg['hosts'] = []
     with open("{}/{}".format(os.getcwd(), config_file), 'r') as yaml_file:
         cfg = yaml.load(yaml_file)
 
     for host_config in cfg['hosts']:
 
-        if cfg['all-hosts']:
+        if 'vagrant' in config_file:
+            host_config['user'] = 'vagrant'
+            host_config['ssh-key'] = '{}/vagrant/.vagrant/machines/{}/virtualbox/private_key' \
+                .format(os.getcwd(), host_config['name'])
+
+        if 'all-hosts' in cfg:
             host_config = config_merge(host_config, cfg['all-hosts'])
 
         merged_cfg['hosts'].append(host_config)
@@ -31,11 +37,13 @@ def get_env_host_string(host_config):
 
 
 def get_env_user(host_config):
-    return host_config['user'] or None
+    if 'user' in host_config:
+        return host_config['user']
 
 
 def get_env_key_filename(host_config):
-    return host_config['ssh-key'] or None
+    if 'ssh-key' in host_config:
+        return host_config['ssh-key']
 
 
 def get_software_args(host_config, _software):

@@ -28,8 +28,7 @@ def deploy(config_file):
     cfg = helper.get_config(config_file)
 
     for host_config in cfg['hosts']:
-
-        if host_config['aws-ebs']:
+        if 'aws-ebs' in host_config:
             aws.mount_ebs_volumes(host_config)
 
         for software in host_config['software']:
