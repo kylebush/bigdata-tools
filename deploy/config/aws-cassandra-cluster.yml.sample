@@ -8,13 +8,12 @@ all-hosts:
       mount: /mnt/cassandra/other
   software:
     - name: cassandra
-      args:
-        cluster-name: C4XL
-        seeds: 10.0.0.1,10.0.0.2,10.0.3
-        data-file-directory: /mnt/cassandra/data
-        commit-log-directory: /mnt/cassandra/other/commit_log
-        saved-caches-directory: /mnt/cassandra/other/saved_caches
-        endpoint-snitch: Ec2Snitch
+      cluster-name: C4XL
+      seeds: 10.0.0.1,10.0.0.2,10.0.3
+      data-file-directory: /mnt/cassandra/data
+      commit-log-directory: /mnt/cassandra/other/commit_log
+      saved-caches-directory: /mnt/cassandra/other/saved_caches
+      endpoint-snitch: Ec2Snitch
     - name: cassandra-lucene-index
 hosts:
   - name: cassandra-1

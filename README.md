@@ -40,13 +40,11 @@ which includes the host name, public IP, private IP, software and software argum
    private-ip: <private ip address>
    software:
      - name: <software to install>
-       args:
-         <argument key>: <argument values>
-         <argument key>: <argument values>
-         <argument key>: <argument values>
+       <argument key>: <argument values>
+       <argument key>: <argument values>
+       <argument key>: <argument values>
      - name: <software to install>
-       args:
-         <argument key>: <argument values>
+       <argument key>: <argument values>
 ```
 
 Additionally, you can use the `all-hosts` sections, to install the same software on all hosts.  The `all-hosts` and `hosts` configuration settings
@@ -59,7 +57,7 @@ The arguments for each tool deployed are show in the next section with the name 
 
 #### cassandra
 
-| argument name |default value | description |
+| argument |default value | description |
 | --- | --- | --- |
 | cluster-name | `'Test Cluster'` | unique name of your Cassandra cluster|
 | data-file-directory | `/var/lib/cassandra/data` | data file directory|
@@ -80,7 +78,7 @@ The arguments for each tool deployed are show in the next section with the name 
 
 #### kafka-broker
 
-| argument name  | default value | description |
+| argument  | default value | description |
 | --- | --- | --- |
 | version | `0.10.0.1` | kafka version |
 | zookeeper-hosts | `localhost:2181` | comma-separated connect string of `host:port` nodes |
@@ -91,14 +89,14 @@ The arguments for each tool deployed are show in the next section with the name 
 
 #### kafka-manager
 
-| argument name  | default value | description |
+| argument  | default value | description |
 | --- | --- | --- |
 | zookeeper-hosts | `localhost:2181` | comma-separated connect string of `host:port` nodes |
 **Note:** zookeeper is required for kafka-broker and should be installed first. This can be specified by how the entries are ordered in your YAML configuration file.
 
 #### redis
 
-| argument name  | default value | description |
+| argument  | default value | description |
 | --- | --- | --- |
 | version | `3.2.6` | redis version |
 | port | `6379` |  redis port |
@@ -110,11 +108,9 @@ The arguments for each tool deployed are show in the next section with the name 
 
 #### zookeeper
 
-| argument name  | default value | description |
+| argument  | default value | description |
 | --- | --- | --- |
-| version | `3.4.9` | zookeeper version |
 | port | `2181` |  zookeeper port |
-| id | `1` | unique id for the zookeeper node |
 | nodes | | array of ZK server nodes (see sample config) |
 
 ### 2. Deployment

@@ -29,38 +29,36 @@ def deploy(config_file):
 
     for host_config in cfg['hosts']:
         if 'aws-ebs' in host_config:
-            aws.mount_ebs_volumes(host_config)
+           aws.mount_ebs_volumes(host_config)
 
         for software in host_config['software']:
             install(software['name'], host_config)
 
 
-def install(_software, _config):
-    if _software == 'cassandra':
-        java.v8_install(_config)
-        cassandra.install(_config)
+def install(software, config):
+    if software == 'cassandra':
+        cassandra.install(config)
 
-    elif _software == 'cassandra-lucene-index':
-        cassandra.lucene_index_install(_config)
+    elif software == 'cassandra-lucene-index':
+        cassandra.lucene_index_install(config)
 
-    elif _software == 'java-8':
-        java.v8_install(_config)
+    elif software == 'java-8':
+        java.v8_install(config)
 
-    elif _software == 'kafka-broker':
-        java.v8_install(_config)
-        kafka.broker_install(_config)
+    elif software == 'kafka-broker':
+        kafka.broker_install(config)
 
-    elif _software == 'kafka-manager':
-        kafka.manager_install(_config)
+    elif software == 'kafka-manager':
+        kafka.manager_install(config)
 
-    elif _software == 'redis':
-        redis.install(_config)
+    elif software == 'redis':
+        redis.install(config)
 
-    elif _software == 'riak-kv':
-        riak.install_kv(_config)
+    elif software == 'riak-kv':
+        riak.install_kv(config)
 
-    elif _software == 'zookeeper':
-        zookeeper.install(_config)
+    elif software == 'zookeeper':
+        zookeeper.install(config)
 
     else:
-        logger.error("Error: {} is not defined as software".format(_software))
+        logger.error("Error: {} is not defined as software".format(software))

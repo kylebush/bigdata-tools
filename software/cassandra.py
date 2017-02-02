@@ -12,7 +12,7 @@ def install(host_config):
     env.user = helper.get_env_user(host_config)
     env.key_filename = helper.get_env_key_filename(host_config)
 
-    args = helper.get_software_args(host_config, 'cassandra')
+    software_config = helper.get_software_config(host_config, 'cassandra')
 
     java.v8_install(host_config)
 
@@ -21,14 +21,14 @@ def install(host_config):
     sudo(". ~/cassandra.sh {}")
 
     # Configuration values from config or use defaults if do not exist
-    cluster_name = args.get('cluster-name', 'Test Cluster')
-    data_file_directory = args.get('data-file-directory', '/var/lib/cassandra/data')
-    commit_log_directory = args.get('commit-log-directory', '/var/lib/cassandra/commit_log')
-    saved_caches_directory = args.get('saved-caches-directory', '/var/lib/cassandra/saved_caches')
-    endpoint_snitch = args.get('endpoint-snitch', 'SimpleSnitch')
-    seeds = args.get('seeds', host_config['private-ip'])
-    listen_address = args.get('listen-address', host_config['private-ip'])
-    rpc_address = args.get('rpc-address', host_config['private-ip'])
+    cluster_name = software_config.get('cluster-name', 'Test Cluster')
+    data_file_directory = software_config.get('data-file-directory', '/var/lib/cassandra/data')
+    commit_log_directory = software_config.get('commit-log-directory', '/var/lib/cassandra/commit_log')
+    saved_caches_directory = software_config.get('saved-caches-directory', '/var/lib/cassandra/saved_caches')
+    endpoint_snitch = software_config.get('endpoint-snitch', 'SimpleSnitch')
+    seeds = software_config.get('seeds', host_config['private-ip'])
+    listen_address = software_config.get('listen-address', host_config['private-ip'])
+    rpc_address = software_config.get('rpc-address', host_config['private-ip'])
 
     configfile = '{}/software/config/cassandra/cassandra.yaml'.format(os.getcwd())
     tempfile = 'cassandra.yaml'

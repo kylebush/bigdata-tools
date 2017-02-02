@@ -4,24 +4,21 @@ hosts:
     private-ip: 192.168.100.100
     software:
       - name: zookeeper
-        args:
-          port: 2181
-          id: 1
-          nodes:
-            - server.1=192.168.100.100:2888:3888
+        port: 2181
+        id: 1
+        nodes:
+          - server.1=192.168.100.100:2888:3888
 
   - name: kafka
     public-ip: 192.168.100.102
     private-ip: 192.168.100.102
     software:
       - name: kafka-broker
-        args:
-          version: 0.10.0.1
-          broker-id: 0
-          zookeeper-hosts: 192.168.100.100:2181
+        version: 0.10.0.1
+        broker-id: 0
+        zookeeper-hosts: 192.168.100.100:2181
       - name: kafka-manager
-        args:
-          zookeeper-hosts: 192.168.100.100:2181
+        zookeeper-hosts: 192.168.100.100:2181
 
   - name: redis
     os: ubuntu/trusty64
@@ -31,18 +28,16 @@ hosts:
     private-ip: 192.168.100.111
     software:
       - name: redis
-        args:
-          version: 3.2.6
-          port: 6379
+        version: 3.2.6
+        port: 6379
 
   - name: cassandra
     public-ip: 192.168.100.106
     private-ip: 192.168.100.106
     software:
       - name: cassandra
-        args:
-          cluster-name: MY-CLUSTER
-          seeds: 192.168.100.106
+        cluster-name: MY-CLUSTER
+        seeds: 192.168.100.106
       - name: cassandra-lucene-index
 
   - name: riak

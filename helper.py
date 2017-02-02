@@ -12,8 +12,8 @@ __status__ = "Development"
 
 def get_config(config_file):
     merged_cfg = {}
+    merged_cfg['hosts'] = list()
 
-    merged_cfg['hosts'] = []
     with open("{}/{}".format(os.getcwd(), config_file), 'r') as yaml_file:
         cfg = yaml.load(yaml_file)
 
@@ -25,9 +25,11 @@ def get_config(config_file):
                 .format(os.getcwd(), host_config['name'])
 
         if 'all-hosts' in cfg:
-            host_config = config_merge(host_config, cfg['all-hosts'])
+            new_host_config = merge(host_config, cfg['all-hosts'])
+        else:
+            new_host_config = host_config
 
-        merged_cfg['hosts'].append(host_config)
+        merged_cfg['hosts'].append(new_host_config)
 
     return merged_cfg
 
@@ -46,32 +48,30 @@ def get_env_key_filename(host_config):
         return host_config['ssh-key']
 
 
-def get_software_args(host_config, _software):
-    args = {}
+def get_software_config(host_config, _software):
 
     for software in host_config['software']:
         if software['name'] == _software:
-            args = software['args']
-
-    return args
+            return software
 
 
-def config_merge(a, b):
-    if a is None or isinstance(a, str) or isinstance(a, unicode) or isinstance(a, int) \
-            or isinstance(a, long) or isinstance(a, float):
-        a = b
-    elif isinstance(a, list):
-        if isinstance(b, list):
-            # merge lists
-            a.extend(b)
+def merge(a, b, path=None, update=True):
+    """merges b into a"""
+    if path is None:
+        path = []
+    for key in b:
+        if key in a:
+            if isinstance(a[key], dict) and isinstance(b[key], dict):
+                merge(a[key], b[key], path + [str(key)])
+            elif a[key] == b[key]:
+                pass  # same leaf value
+            elif isinstance(a[key], list) and isinstance(b[key], list):
+                for idx, val in enumerate(b[key]):
+                    a[key][idx] = merge(a[key][idx], b[key][idx], path + [str(key), str(idx)], update=update)
+            elif update:
+                a[key] = b[key]
+            else:
+                raise Exception('Conflict at %s' % '.'.join(path + [str(key)]))
         else:
-            a.append(b)
-    elif isinstance(a, dict):
-        if isinstance(b, dict):
-            for key in b:
-                if key in a:
-                    a[key] = config_merge(a[key], b[key])
-                else:
-                    a[key] = b[key]
-
+            a[key] = b[key]
     return a

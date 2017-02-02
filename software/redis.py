@@ -11,11 +11,11 @@ def install(host_config):
     env.user = helper.get_env_user(host_config)
     env.key_filename = helper.get_env_key_filename(host_config)
 
-    args = helper.get_software_args(host_config, 'redis')
+    software_config = helper.get_software_config(host_config, 'redis')
 
-    redis_version = args.get('version', '3.2.6')
-    redis_port = args.get('port', '6379')
-    redis_data_dir = args.get('data-directory', '/var/lib/redis')
+    redis_version = software_config.get('version', '3.2.6')
+    redis_port = software_config.get('port', '6379')
+    redis_data_dir = software_config.get('data-directory', '/var/lib/redis')
 
     machine.disable_transparent_huge_pages(env.host_string)
     machine.set_overcommit_memory(env.host_string, 1)

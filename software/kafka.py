@@ -14,17 +14,17 @@ def broker_install(host_config):
 
     java.v8_install(host_config)
 
-    args = helper.get_software_args(host_config, 'kafka-broker')
+    software_config = helper.get_software_config(host_config, 'kafka-broker')
 
-    version = args.get('version', '0.10.0.1')
+    version = software_config.get('version', '0.10.0.1')
 
     put('{}/software/scripts/kafka-broker.sh'.format(os.getcwd()), '~/', use_sudo=True)
     sudo("chmod +x kafka-broker.sh")
     sudo(". ~/kafka-broker.sh {}".format(version))
 
-    broker_id = args.get('broker-id', '0')
-    zk_hosts = args.get('zookeeper-hosts', 'localhost:2181')
-    log_directories = args.get('log-directories', '/var/lib/kafka-logs')
+    broker_id = software_config.get('broker-id', '0')
+    zk_hosts = software_config.get('zookeeper-hosts', 'localhost:2181')
+    log_directories = software_config.get('log-directories', '/var/lib/kafka-logs')
 
     tag = '## ---- CUSTOM CONFIGURATION ---'
 
@@ -33,6 +33,7 @@ def broker_install(host_config):
     sudo('echo "broker.id={}" | sudo tee -a /srv/kafka/config/server.properties'.format(broker_id))
     sudo('echo "zookeeper.connect={}" | sudo tee -a /srv/kafka/config/server.properties'.format(zk_hosts))
     sudo('echo "log.dirs={}" | sudo tee -a /srv/kafka/config/server.properties'.format(log_directories))
+    sudo('echo "listeners=PLAINTEXT://:9093" | sudo tee -a /srv/kafka/config/server.properties')
     sudo('echo "{}" | sudo tee -a /srv/kafka/config/server.properties'.format(tag))
 
     sudo("service kafka restart")
@@ -43,8 +44,8 @@ def manager_install(host_config):
     env.user = helper.get_env_user(host_config)
     env.key_filename = helper.get_env_key_filename(host_config)
 
-    args = helper.get_software_args(host_config, 'kafka-manager')
-    zk_hosts = args.get('zookeeper-hosts', 'localhost:2181')
+    software_config = helper.get_software_config(host_config, 'kafka-manager')
+    zk_hosts = software_config.get('zookeeper-hosts', 'localhost:2181')
 
     put('{}/software/scripts/kafka-manager.sh'.format(os.getcwd()), '~/', use_sudo=True)
     sudo("chmod +x kafka-manager.sh")
@@ -96,7 +97,7 @@ def get_zk_host(cfg):
     for host_config in cfg['hosts']:
         for software in host_config['software']:
             if software['name'] == 'kafka-broker':
-                zk_host = software['args'].get('zookeeper-hosts')
+                zk_host = software.get('zookeeper-hosts')
                 if zk_host:
                     return zk_host.split(",")[0]
     return None

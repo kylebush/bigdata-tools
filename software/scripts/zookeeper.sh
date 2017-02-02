@@ -1,9 +1,8 @@
 #!/bin/bash
 
-VERSION=$1
-ZK_PORT=$2
-ZK_ID=$3
-ZK_NODES=`(echo $4 | tr ',' '\n')`
+ZK_PORT=$1
+ZK_ID=$2
+ZK_NODES=`(echo $3 | tr ',' '\n')`
 
 INSTALLED=".zookeeper.installed"
 
@@ -19,7 +18,9 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confd
 
 sudo apt-get -y install zookeeperd
 
-sudo cat <<CONFIG >> /srv/zookeeper/conf/zoo.cfg
+echo "$ZK_ID" | sudo tee /var/lib/zookeeper/myid
+
+sudo cat <<CONFIG >> /etc/zookeeper/conf/zoo.cfg
 tickTime=2000
 initLimit=10
 syncLimit=5
