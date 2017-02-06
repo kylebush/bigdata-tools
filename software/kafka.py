@@ -33,7 +33,7 @@ def broker_install(host_config):
     sudo('echo "broker.id={}" | sudo tee -a /srv/kafka/config/server.properties'.format(broker_id))
     sudo('echo "zookeeper.connect={}" | sudo tee -a /srv/kafka/config/server.properties'.format(zk_hosts))
     sudo('echo "log.dirs={}" | sudo tee -a /srv/kafka/config/server.properties'.format(log_directories))
-    sudo('echo "listeners=PLAINTEXT://:9093" | sudo tee -a /srv/kafka/config/server.properties')
+    sudo('echo "listeners=PLAINTEXT://{}:9093" | sudo tee -a /srv/kafka/config/server.properties'.format(host_config['private-ip']))
     sudo('echo "{}" | sudo tee -a /srv/kafka/config/server.properties'.format(tag))
 
     sudo("service kafka restart")
