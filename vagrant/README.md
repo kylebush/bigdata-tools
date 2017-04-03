@@ -23,8 +23,8 @@ Deployment automation for installing Big Data / NoSQL products using Vagrant.
 
 ### 3. Clone this repository
 >```
->git clone https://github.com/kylebush/bigdata-deploy.git
->cd bigdata-deploy
+>git clone https://github.com/kylebush/bigdata-tools.git
+>cd bigdata-tools/vagrant
 >```
 
 #### 4. Vagrant configuration

@@ -14,37 +14,37 @@ __status__ = "Development"
 @task
 def up(machine=""):
     """Starts and provisions the machine"""
-    local('cd {}/vagrant; vagrant up {}'.format(os.getcwd(), machine))
+    local('vagrant up {}'.format(os.getcwd(), machine))
     print_hosts()
 
 
 @task
 def provision(machine=""):
     """Provisions the machines"""
-    local('cd {}/vagrant; vagrant provision {}'.format(os.getcwd(), machine))
+    local('vagrant provision {}'.format(os.getcwd(), machine))
     print_hosts()
 
 @task
 def destroy(machine=""):
     """Destroys the machine and deletes all associated files"""
-    local('cd {}/vagrant; vagrant destroy {}'.format(os.getcwd(), machine))
+    local('vagrant destroy {}'.format(os.getcwd(), machine))
 
 
 @task
 def suspend(machine=""):
     """Suspends the machine and saves the current state"""
-    local('cd {}/vagrant; vagrant suspend {}'.format(os.getcwd(), machine))
+    local('vagrant suspend {}'.format(os.getcwd(), machine))
 
 
 @task
 def resume(machine=""):
     """Resumes a suspended machine"""
-    local('cd {}/vagrant; vagrant resume {}'.format(os.getcwd(), machine))
+    local('vagrant resume {}'.format(os.getcwd(), machine))
 
 @task
 def print_hosts():
     """Prints the configured hosts"""
-    config_file = "{}/vagrant/config/vagrant.yml".format(os.getcwd())
+    config_file = "{}/config/vagrant.yml".format(os.getcwd())
 
     with open(config_file, 'r') as yaml_file:
         cfg = yaml.load(yaml_file)

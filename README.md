@@ -14,6 +14,29 @@ Provisioning is available for both **Vagrant/VirtualBox** and **AWS EC2** along 
 - [Cassandra](http://cassandra.apache.org/)
 - [Riak KV](http://basho.com/products/riak-kv/)
 
+
+## Prerequisites (Mac OSX)
+
+### Miniconda - Python package manager
+```
+wget https://repo.continuum.io/miniconda/Miniconda2-latest-MacOSX-x86_64.sh -O miniconda.sh
+chmod +x miniconda.sh
+./miniconda.sh -b
+```
+
+Add the following to your `~/.profile`:
+```
+export PATH="~/miniconda2/bin:$PATH"
+```
+
+The run the following commands to create and activate environment:
+
+```
+source ~/.profile
+conda env create
+source activate bigdata-tools
+```
+
 ## Provisioning
 You can use the provided Vagrant or AWS EC2 provisioning tools to quickly and easily create virtual machines or create on your own.
 
@@ -26,7 +49,7 @@ Once you have configured and launched your virtual hosts, you are now ready to d
 ### 1. Configuration
 There is a sample deployment configuration file for Vagrant and AWS for you to use as a starting point:
 ```bash
-cp deploy/vagrant.yml.sample deploy/vagrant.yml
+cp deploy/config/vagrant.yml.sample deploy/config/vagrant.yml
 ```
 OR
 ```bash
