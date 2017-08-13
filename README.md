@@ -139,6 +139,7 @@ The arguments for each tool deployed are show in the next section with the name 
 | argument  | default value | description |
 | --- | --- | --- |
 | zookeeper-hosts | `localhost:2181` | comma-separated connect string of `host:port` nodes |
+
 **Note:** zookeeper is required for kafka-broker and should be installed first. This can be specified by how the entries are ordered in your YAML configuration file.
 
 #### redis
