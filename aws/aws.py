@@ -33,15 +33,17 @@ def mount_ebs_volumes(host_config):
 
     sudo("apt-get -y install xfsprogs")
 
-    for ebs in host_config['aws-ebs']:
+    for ebs in host_config['ec2-mounts']:
 
         device = ebs['device']
         mount = ebs['mount']
 
         sudo("mkdir -p {}".format(mount))
 
+        sudo("mv /etc/fstab /etc/fstab.old")
+        sudo("touch /etc/fstab")
         if sudo('mkfs.xfs -f {0}'.format(device), warn_only=True):
-            run("echo '{0}\t{1}\txfs\tdefaults,nobootwait,noatime\t0\t0' | sudo tee -a /etc/fstab".format(device, mount))
+            run("echo '{0}\t{1}\txfs\tdefaults\t0\t0' | sudo tee -a /etc/fstab".format(device, mount))
             sudo('sudo mount -a')
 
         logger.info("EBS volume {} : {} mounted.".format(device, mount))
@@ -162,7 +164,7 @@ def aws_provision():
     if reservation:
         logger.info('Waiting for VM instances to start...')
 
-    time.sleep(15)
+   # time.sleep(10)
 
     instance_set_info = []
     instance_ids = []  # stores a list of all the active instanceids we can use to attach ebs volumes to
@@ -206,7 +208,7 @@ def aws_provision():
     print "-" * 50
     print "hosts:"
     for idx, private_ip in enumerate(instance_private_ips):
-        print "  - name: {0}-{1}".format(tags['Name'], idx + 1)
+        print "  - name: {}".format(tags['Name'])
         print "    private-ip: {}".format(private_ip)
         print "    public-ip: {}".format(instance_public_dns[idx])
     print "-" * 50

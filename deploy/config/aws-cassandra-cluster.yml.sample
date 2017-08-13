@@ -1,7 +1,7 @@
 all-hosts:
   user: ubuntu
   ssh-key: ~/.ssh/your-ssh-key.pem
-  aws-ebs:
+  ec2-mounts:
     - device: /dev/xvdb
       mount: /mnt/cassandra/data
     - device: /dev/xvdc

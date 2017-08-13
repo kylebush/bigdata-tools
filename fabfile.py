@@ -4,7 +4,7 @@ from fabric.api import task
 
 import helper
 from aws import aws
-from software import cassandra, java, kafka, redis, riak, zookeeper
+from software import cassandra, java, kafka, redis, riak, zookeeper,crate, citusdb
 from vagrant import vagrant
 
 aws
@@ -28,37 +28,42 @@ def deploy(config_file):
     cfg = helper.get_config(config_file)
 
     for host_config in cfg['hosts']:
-        if 'aws-ebs' in host_config:
+        if 'ec2-mounts' in host_config:
            aws.mount_ebs_volumes(host_config)
-
         for software in host_config['software']:
-            install(software['name'], host_config)
+            install(software['name'], host_config, cfg)
 
 
-def install(software, config):
+def install(software, host_config, config):
     if software == 'cassandra':
-        cassandra.install(config)
+        cassandra.install(host_config)
 
     elif software == 'cassandra-lucene-index':
-        cassandra.lucene_index_install(config)
+        cassandra.lucene_index_install(host_config)
+
+    elif software == 'crate':
+        crate.db_install(host_config, config)
+
+    elif software == 'citusdb':
+        citusdb.db_install(host_config, config)
 
     elif software == 'java-8':
-        java.v8_install(config)
+        java.v8_install(host_config)
 
     elif software == 'kafka-broker':
-        kafka.broker_install(config)
+        kafka.broker_install(host_config)
 
     elif software == 'kafka-manager':
-        kafka.manager_install(config)
+        kafka.manager_install(host_config)
 
     elif software == 'redis':
-        redis.install(config)
+        redis.install(host_config)
 
     elif software == 'riak-kv':
-        riak.install_kv(config)
+        riak.install_kv(host_config)
 
     elif software == 'zookeeper':
-        zookeeper.install(config)
+        zookeeper.install(host_config)
 
     else:
         logger.error("Error: {} is not defined as software".format(software))

@@ -1,7 +1,7 @@
 all-hosts:
   user: ubuntu
   ssh-key: ~/.ssh/your_ssh_key.pem
-  aws-ebs:
+  ec2-mounts:
       - device: /dev/xvdb
         mount: /mnt/kafka/logs
         owner: ubuntu

@@ -13,6 +13,8 @@ Provisioning is available for both **Vagrant/VirtualBox** and **AWS EC2** along 
 - [Redis](https://redis.io/)
 - [Cassandra](http://cassandra.apache.org/)
 - [Riak KV](http://basho.com/products/riak-kv/)
+- [Crate.io](https://crate.io/)
+- [Citus Data](https://www.citusdata.com/)
 
 
 ## Prerequisites (Mac OSX)
@@ -94,6 +96,28 @@ The arguments for each tool deployed are show in the next section with the name 
 #### cassandra-lucene-index
 
 > No arguments required.
+
+#### crate
+
+| argument  | default value | description |
+| --- | --- | --- |
+| cluster-name | `my-cluster` |  name of your crate cluster |
+| data-dir | | array of data directories (see sample config) |
+| heap-size | | Java heap size |
+| security-group-name | | name of security for EC2 instance to discover crate nodes (optional) |
+| product-tag | | EC2 instance product tag to discover crate nodes (optional) |
+| aws-access-key | | AWS access key (optional) |
+| aws-secret-key | | AWS secret key (optional) |
+
+#### citusdb
+
+| argument  | default value | description |
+| --- | --- | --- |
+| db-name |  |  name of database |
+| db-user | | name of database user |
+| db-password | | database password |
+| data-dir | | data directory where Postgres data is stored |
+
 
 #### java-8
 

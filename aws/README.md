@@ -58,7 +58,7 @@ Most values should be self-explanatory, but here are some specific to pay close 
 
 > Run the following fabric with the AWS provision config file and the number of nodes to launch:
 >```bash
->fab aws_launch:"aws/provision/config/ec2-c4xlarge.yml",3
+>fab aws.ec2_provision:"aws/provision/config/ec2-c4xlarge.yml",3
 > ```
 > Once the EC2 instances have been launched, the private and public IP values will be displayed. You 
  can copy these value and paste them in your deployment configuration file to specific what Big Data software 

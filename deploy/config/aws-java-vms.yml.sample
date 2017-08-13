@@ -1,0 +1,13 @@
+all-hosts:
+  user: ubuntu
+  ssh-key: ~/.ssh/your-ssh-key.pem
+  ec2-mounts:
+      - device: /dev/xvdb
+        mount: /mnt
+        owner: ubuntu
+  software:
+    - name: java-8
+hosts:
+  - name: java-node-1
+    private-ip: 10.0.0.101
+    public-ip: ec2-54-1-1-200.compute-1.amazonaws.com

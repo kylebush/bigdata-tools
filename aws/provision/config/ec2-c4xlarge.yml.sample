@@ -7,7 +7,7 @@ az: us-east-1e
 region: us-east-1
 ami-id: ami-d05e75b8
 instance-type: c4.xlarge
-ebs-optimized: False
+ebs-optimized: True
 ebs:
   volumes:
     - device: /dev/sdb
@@ -27,4 +27,4 @@ ssh_keys:
   key-pair-name: your-ssh-key
 subnets:
   us-east-1e:
-    subnet: subnet-3932a614
+    subnet: subnet-1234a789

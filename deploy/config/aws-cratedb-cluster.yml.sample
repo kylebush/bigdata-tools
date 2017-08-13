@@ -1,0 +1,30 @@
+all-hosts:
+  user: ubuntu
+  ssh-key: ~/.ssh/your-ssh-key.pem
+  ec2-mounts:
+    - device: /dev/xvdb
+      mount: /mnt/crate/data1
+      owner: crate
+    - device: /dev/xvdc
+      mount: /mnt/crate/data2
+      owner: crate
+  software:
+    - name: java-8
+    - name: crate
+      cluster-name: my-cluster
+      data-dir: /mnt/crate/data1, /mnt/crate/data2
+      heap-size: 8g
+      security-group: my-security-group-name
+      product-tag: my-product
+      aws-access-key: <AWS access key>
+      aws-secret-key: <AWS secret key>
+hosts:
+  - name: cratedb-node-1
+    private-ip: 10.0.0.101
+    public-ip: ec2-52-1-1-100.compute-1.amazonaws.com
+  - name: cratedb-node-2
+    private-ip: 10.0.0.101
+    public-ip: ec2-52-1-1-101.compute-1.amazonaws.com
+  - name: cratedb-node-3
+    private-ip: 10.0.0.102
+    public-ip: ec2-52-1-1-102.compute-1.amazonaws.com

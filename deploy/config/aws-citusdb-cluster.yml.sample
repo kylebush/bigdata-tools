@@ -1,0 +1,23 @@
+all-hosts:
+  user: ubuntu
+  ssh-key: ~/.ssh/your-ssh-key.pem
+  ec2-mounts:
+    - device: /dev/xvdb
+      mount: /mnt/citus/data
+      owner: postgres
+  software:
+    - name: citusdb
+      db-name: my_database
+      db-user: admin
+      db-password: <password>
+      data-dir: /mnt/citus/data
+hosts:
+  - name: citusdb-node-1
+    private-ip: 10.0.0.1
+    public-ip: ec2-54-1-1-210.compute-1.amazonaws.com
+  - name: citusdb-node-2
+    private-ip: 10.0.0.2
+    public-ip: ec2-54-1-1-222.compute-1.amazonaws.com
+  - name: citusdb-node-3
+    private-ip: 10.0.0.3
+    public-ip: ec2-54-1-1-101.compute-1.amazonaws.com
